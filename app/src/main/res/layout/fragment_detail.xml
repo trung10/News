@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/gradient"
             android:scaleType="centerCrop"
-            imageFromUrl="@{newsDetail.urlToImage}"
+            app:imageFromUrl="@{newsDetail.urlToImage}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

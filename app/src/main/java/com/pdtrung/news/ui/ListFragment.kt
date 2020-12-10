@@ -4,25 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.pdtrung.news.api.Status
 import com.pdtrung.news.databinding.FragmentListBinding
 import com.pdtrung.news.di.Injectable
 import com.pdtrung.news.di.injectViewModel
+import com.pdtrung.news.util.ConnectivityUtil
+import kotlinx.android.synthetic.main.fragment_list.*
+import javax.inject.Inject
 
 class ListFragment : Fragment(), Injectable {
 
-    //@Inject
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: NewsViewModel
     private lateinit var binding: FragmentListBinding
     private var isConnected : Boolean = true
     val newsViewModel : NewsViewModel by viewModels { viewModelFactory }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_main">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_main"
+    app:startDestination="@id/detailFragment">
 
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.pdtrung.news.ui.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="newsItem"
+            app:argType="com.pdtrung.news.api.NewsListModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.pdtrung.news.ui.ListFragment"
+        android:label="ListFragment" >
+        <action
+            android:id="@+id/action_listFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <argument
+            android:name="newsItem"
+            app:argType="com.pdtrung.news.api.NewsListModel" />
+    </fragment>
 </navigation>

@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.pdtrung.news.databinding.FragmentDetailBinding
 import com.pdtrung.news.di.Injectable
 
 class DetailFragment : Fragment(), Injectable {
-    //  private val args : NewsDetailFragmentArgs by navArgs()
+    private val args: DetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,8 +24,8 @@ class DetailFragment : Fragment(), Injectable {
             activity?.supportFragmentManager?.popBackStack()
         }
 
-        /*val newsModel = args.newsItem
-        binding.newsDetail = newsModel*/
+        val newsModel = args.newsItem
+        binding.newsDetail = newsModel
 
         return binding.root
     }
