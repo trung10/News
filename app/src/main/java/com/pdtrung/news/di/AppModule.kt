@@ -1,11 +1,70 @@
 package com.pdtrung.news.di
 
-import com.pdtrung.news.NewsApplication
+import android.app.Application
+import com.pdtrung.news.api.NewsService
+import com.pdtrung.news.data.AppDatabase
+import com.pdtrung.news.data.set.NewsRemoteDataSource
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
+import dagger.Provides
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
-@Module
-interface AppModule {
-    @ContributesAndroidInjector(modules = [ActivityModule::class])
-    abstract fun assaa(): NewsApplication
+@Module(includes = [ViewModelModule::class, CoreDataModule::class])
+class AppModule {
+
+    @Singleton
+    @Provides
+    fun provideNewsService(
+        @NewsApi okhttpClient: OkHttpClient,
+        converterFactory: GsonConverterFactory
+    ) = provideService(okhttpClient, converterFactory, NewsService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideNewsRemoteDataSource(newsService: NewsService) = NewsRemoteDataSource(newsService)
+
+    @NewsApi
+    @Provides
+    fun providePrivateOkHttpClient(
+        upstreamClient: OkHttpClient
+    ): OkHttpClient {
+        return upstreamClient.newBuilder().build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideDb(app: Application) = AppDatabase.getInstance(app)
+
+    @Singleton
+    @Provides
+    fun provideNewsSetDao(db: AppDatabase) = db.getNewsListDao()
+
+
+    @CoroutineScopeIO
+    @Provides
+    fun provideCoroutineScopeIO() = CoroutineScope(Dispatchers.IO)
+
+
+    private fun createRetrofit(
+        okhttpClient: OkHttpClient,
+        converterFactory: GsonConverterFactory
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(NewsService.ENDPOINT)
+            .client(okhttpClient)
+            .addConverterFactory(converterFactory)
+            .build()
+    }
+
+    private fun <T> provideService(
+        okhttpClient: OkHttpClient,
+        converterFactory: GsonConverterFactory, clazz: Class<T>
+    ): T {
+        return createRetrofit(okhttpClient, converterFactory).create(clazz)
+    }
+
 }

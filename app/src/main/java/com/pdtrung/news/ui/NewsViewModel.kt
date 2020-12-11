@@ -7,8 +7,9 @@ import com.pdtrung.news.data.set.NewsRepository
 import com.pdtrung.news.di.CoroutineScopeIO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
+import javax.inject.Inject
 
-class NewsViewModel(
+class NewsViewModel @Inject constructor(
     private val repository: NewsRepository,
     @CoroutineScopeIO private val ioCoroutineScope: CoroutineScope
 ) : ViewModel() {
