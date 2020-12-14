@@ -32,7 +32,6 @@ class ListFragment : Fragment(), Injectable {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentListBinding.inflate(inflater, container, false)
-        context ?: return binding.root
         return binding.root
     }
 
@@ -58,7 +57,7 @@ class ListFragment : Fragment(), Injectable {
                 }
                 Status.FAILED -> {
                     progressBar.visibility = View.GONE
-                    // Handle fail state
+                    // todo Handle fail state
                 }
                 Status.SUCCESS -> {
                     progressBar.visibility = View.GONE

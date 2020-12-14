@@ -11,9 +11,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
-class NewsPageDataSource @Inject constructor(
+class NewsPageDataSource constructor(
     private val remoteDataSource: NewsRemoteDataSource,
     private val newsDao: NewsDao,
     private val coroutineScope: CoroutineScope

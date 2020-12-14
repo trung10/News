@@ -23,7 +23,7 @@ class NewsViewModel @Inject constructor(
     fun newsList(connectivityAvailable: Boolean): Data<NewsListModel>? {
 
         if (newsList == null) {
-            //newsList = repository.observePagedNews(connectivityAvailable, ioCoroutineScope)
+            newsList = repository.observePagedNews(connectivityAvailable, ioCoroutineScope)
         }
         return newsList
     }

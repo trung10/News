@@ -6,9 +6,8 @@ import androidx.paging.PagedList
 import com.pdtrung.news.api.NewsListModel
 import com.pdtrung.news.data.dao.NewsDao
 import kotlinx.coroutines.CoroutineScope
-import javax.inject.Inject
 
-class NewsPageDataSourceFactory @Inject constructor(
+class NewsPageDataSourceFactory constructor(
     private val dataSource: NewsRemoteDataSource,
     private val dao: NewsDao,
     private val scope: CoroutineScope

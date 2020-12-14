@@ -11,19 +11,22 @@ import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 @Singleton
 class NewsRepository @Inject constructor(
     private val newsDao: NewsDao,
     private val newsRemoteDataSource: NewsRemoteDataSource
 ) {
 
-    fun observePagedNews(connectivityAvailable : Boolean, coroutineScope: CoroutineScope)
+    fun observePagedNews(connectivityAvailable: Boolean, coroutineScope: CoroutineScope)
             : Data<NewsListModel> {
 
         return if (connectivityAvailable)
             observeRemotePagedNews(coroutineScope)
         else observeLocalPagedNews()
     }
+
+    // data set from local (Database)
     private fun observeLocalPagedNews(): Data<NewsListModel> {
 
         val dataSourceFactory = newsDao.getPagedNews()
@@ -32,18 +35,28 @@ class NewsRepository @Inject constructor(
         createLD.postValue(NetworkState.LOADED)
 
         return Data(
-            LivePagedListBuilder(dataSourceFactory,
-            NewsPageDataSourceFactory.pagedListConfig()).build(),createLD)
+            LivePagedListBuilder(
+                dataSourceFactory,
+                NewsPageDataSourceFactory.pagedListConfig()
+            ).build(), createLD
+        )
     }
 
+    // data set from api
     private fun observeRemotePagedNews(ioCoroutineScope: CoroutineScope): Data<NewsListModel> {
-        val dataSourceFactory = NewsPageDataSourceFactory(newsRemoteDataSource,
-            newsDao, ioCoroutineScope)
+        val dataSourceFactory = NewsPageDataSourceFactory(
+            newsRemoteDataSource,
+            newsDao, ioCoroutineScope
+        )
 
         val networkState = Transformations.switchMap(dataSourceFactory.liveData) {
             it.networkState
         }
-        return Data(LivePagedListBuilder(dataSourceFactory,
-            NewsPageDataSourceFactory.pagedListConfig()).build(),networkState)
+        return Data(
+            LivePagedListBuilder(
+                dataSourceFactory,
+                NewsPageDataSourceFactory.pagedListConfig()
+            ).build(), networkState
+        )
     }
 }

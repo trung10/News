@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.pdtrung.news.databinding.FragmentDetailBinding
-import com.pdtrung.news.di.Injectable
 
-class DetailFragment : Fragment(), Injectable {
+class DetailFragment : Fragment() {
     private val args: DetailFragmentArgs by navArgs()
 
     override fun onCreateView(
