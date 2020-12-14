@@ -4,8 +4,9 @@ import com.pdtrung.news.ui.ListFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
+@Suppress("unused")
 @Module
 abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
-    abstract fun contributeThemeFragment(): ListFragment
+    abstract fun contributeListFragment(): ListFragment
 }

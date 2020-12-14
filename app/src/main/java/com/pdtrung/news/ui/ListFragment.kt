@@ -32,7 +32,7 @@ class ListFragment : Fragment(), Injectable {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentListBinding.inflate(inflater, container, false)
-
+        context ?: return binding.root
         return binding.root
     }
 

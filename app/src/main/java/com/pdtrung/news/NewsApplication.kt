@@ -3,6 +3,7 @@ package com.pdtrung.news
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import com.facebook.stetho.Stetho
 import com.pdtrung.news.di.AppInjector
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -16,8 +17,10 @@ class NewsApplication : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+        if (BuildConfig.DEBUG) Stetho.initializeWithDefaults(this)
+
         AppInjector.init(this)
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
+    override fun activityInjector() = dispatchingAndroidInjector
 }
